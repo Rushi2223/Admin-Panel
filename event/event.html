@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel-Event</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="event.css">
+    
+    
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <nav>
+            <a href="../dashboard/dash.html" onclick="showSection('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="../teacher/teacher.html" onclick="showSection('teachers')"><i class="fas fa-chalkboard-teacher"></i> Teachers</a>
+            <div class="dropdown">
+                <a href="#students" onclick="showSection('students')"><i class="fas fa-user-graduate"></i> Students</a>
+                <div class="dropdown-content">
+                    <a href="../student/student.html" onclick="showForm('allStudents')"><i class="fas fa-users"></i>All Students</a>
+                    <a href="../student/atendance/atendance.html" onclick="showForm('attendance')"><i class="fas fa-calendar-check"></i>Attendance</a>
+                    <a href="#classes" onclick="showForm('classes')"><i class="fas fa-chalkboard"></i>Classes</a>
+                </div>
+            </div>
+            <a href="../billing/bill.html" onclick="showSection('billing')"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+            <a href="../Exam/exam.html" onclick="showSection('exam')"><i class="fas fa-file-alt"></i> Exam</a>
+            <a href="../admissionform/adfo.html" onclick="showSection('admissions')"><i class="fas fa-user-plus"></i> Admission Form</a>
+            <a href="#admission-list" onclick="showSection('admisssion-list')"><i class="fas fa-list"></i> Admission Form List</a>
+            <a href="#events" onclick="showSection('events')"><i class="fas fa-calendar-alt"></i> Events</a>
+            <a href="../setting/setting.html" onclick="showSection('settings')"><i class="fas fa-cogs"></i> Settings</a>
+            <!--<a href="#profile" onclick="showSection('profile')"><i class="fas fa-user"></i> Profile</a>-->
+        </nav>
+    </div> 
+    <div class="main-content">
+        <div class="top-bar">
+            <input type="search" placeholder="Search..." id="globalSearch">
+            <div class="user-controls">
+                <div style="position: relative;">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge"></span>
+                </div>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+
+        <div id="dashboard" class="section">
+            <h2>Events</h2>
+            <div class="dashboard-widgets">
+                <div class="widget">
+                    <h3>Total Users</h3>
+                    <p id="total-users">1,500</p>
+                    <div class="icon-box">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>New Orders</h3>
+                    <p id="new-orders">1000</p>
+                    <div class="icon-box">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>Revenue</h3>
+                    <p id="revenue">$12,345</p>
+                    <div class="icon-box">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>Feedback</h3>
+                    <p id="feedback">1200</p>
+                    <div class="icon-box">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---------------------------------------------event data------------------------------------>
+        <div class="table-container">
+            <table id="eventTable">
+                <thead>
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Location</th>
+                        <th>Chief Guest</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="eventList">
+                    <tr onclick="ChiefGuest">
+                        <td>School Annual Day</td>
+                        <td>2024-12-15</td>
+                        <td>10:00 AM</td>
+                        <td>Auditorium</td>
+                        <td>Dr. John Doe</td>
+                        <td>Celebration of annual achievements and performances.</td>
+                        <td class="action-buttons">
+                            <!--<button class="view-participants-btn" onclick="viewParticipants('School Annual Day')">
+                                <i class="fas fa-users"></i> 
+                            </button>-->
+                            <i class="fas fa-users" class="view-participants-btn" onclick="viewParticipants('School Annual Day')"></i> 
+                           <!-- <i class="fas fa-edit" title="Edit"></i>
+                            <i class="fas fa-trash" title="Delete"></i>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Science Fair</td>
+                        <td>2024-11-10</td>
+                        <td>11:00 AM</td>
+                        <td>Exhibition Hall</td>
+                        <td>Prof. Jane Smith</td>
+                        <td>Showcase of student science projects and innovations.</td>
+                        <td class="action-buttons">
+                            <!--<button class="view-participants-btn" onclick="viewParticipants('School Annual Day')">
+                                <i class="fas fa-users"></i> 
+                            </button>-->
+                            <i class="fas fa-users" class="view-participants-btn" onclick="viewParticipants('School Annual Day')"></i> 
+                           <!-- <i class="fas fa-edit" title="Edit"></i>
+                            <i class="fas fa-trash" title="Delete"></i>-->
+                        </td>
+                    </tr>
+                    <!-- Additional rows as needed -->
+                </tbody>
+            </table>
+        </div> 
+        <div id="participantsModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="participantsTitle">Participants</h3>
+                    <span class="close" onclick="closeParticipantsModal()">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <table class="participants-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>ID</th>
+                                <th>Phone</th>
+                                <th>Class</th>
+                            </tr>
+                        </thead>
+                        <tbody id="participantsList">
+                            <!-- Dynamic content will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+           
+     
+     
+        
+        
+        <!-- Main content goes here -->
+    </div>
+    <script src="event.js"></script>
+</body>
+</html>

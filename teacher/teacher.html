@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel-Teacher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="teacher.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <nav>
+            <a href="../dashboard/dash.html" onclick="showSection('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="#teacher" onclick="showSection('teachers')"><i class="fas fa-chalkboard-teacher"></i> Teachers</a>
+            <div class="dropdown">
+                <a href="#students" onclick="showSection('students')"><i class="fas fa-user-graduate"></i> Students</a>
+                <div class="dropdown-content">
+                    <a href="../student/student.html" onclick="showForm('allStudents')"><i class="fas fa-users"></i>All Students</a>
+                    <a href="../student/atendance/atendance.html" onclick="showForm('attendance')"><i class="fas fa-calendar-check"></i>Attendance</a>
+                    <a href="#classes" onclick="showForm('classes')"><i class="fas fa-chalkboard"></i>Classes</a>
+                </div>
+            </div>
+            <a href="../billing/bill.html" onclick="showSection('billing')"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+            <a href="../Exam/exam.html" onclick="showSection('exam')"><i class="fas fa-file-alt"></i> Exam</a>
+            <a href="../admissionform/adfo.html" onclick="showSection('admissions')"><i class="fas fa-user-plus"></i> Admission Form</a>
+            <a href="#admission-list" onclick="showSection('admisssion-list')"><i class="fas fa-list"></i> Admission Form List</a>
+            <a href="../event/event.html" onclick="showSection('events')"><i class="fas fa-calendar-alt"></i> Events</a>
+            <a href="#settings" onclick="showSection('settings')"><i class="fas fa-cogs"></i> Settings</a>
+            <a href="#profile" onclick="showSection('profile')"><i class="fas fa-user"></i> Profile</a>
+        </nav>
+    </div>
+    
+    <div class="main-content">
+        <div class="top-bar">
+            <input type="search" placeholder="Search..." id="globalSearch">
+            <div class="user-controls">
+                <div style="position: relative;">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge"></span>
+                </div>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+
+        <div id="dashboard" class="section">
+            <h2>Teachers</h2>
+            <div class="dashboard-widgets">
+                <div class="widget">
+                    <h3>Total Users</h3>
+                    <p id="total-users">1,500</p>
+                    <div class="icon-box">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>New Orders</h3>
+                    <p id="new-orders">1000</p>
+                    <div class="icon-box">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>Revenue</h3>
+                    <p id="revenue">$12,345</p>
+                    <div class="icon-box">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>Feedback</h3>
+                    <p id="feedback">1200</p>
+                    <div class="icon-box">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--.....................................................................-->
+
+        <div class="container">
+            <div class="table-wrapper">
+                <table class="teacher-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Subject</th>
+                            <th>Classes</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Example Row -->
+                        <tr>
+                            <td>John Doe</td>
+                            <td>Mathematics</td>
+                            <td>Class 7</td>
+                            <td>john.doe@example.com</td>
+                            <td>+1234567890</td>
+                            <td class="actions">
+                                <button onclick="openViewModal('John Doe', 'Mathematics', 'Class 7', 'john.doe@example.com', '+1234567890')">View</button>
+                                <button onclick="openEditModal('John Doe', 'Mathematics', 'Class 7', 'john.doe@example.com', '+1234567890')">Edit</button>
+                                <button onclick="deleteTeacher(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <!-- Additional Rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+        <!-- View Modal -->
+        <div id="infoModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Teacher Information</h2>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Name:</strong> <span id="viewTeacherName">John Doe</span></p>
+                    <p><strong>Subject:</strong> <span id="viewTeacherSubject">Mathematics</span></p>
+                    <p><strong>Classes:</strong> <span id="viewTeacherClasses">Class 7</span></p>
+                    <p><strong>Email:</strong> <span id="viewTeacherEmail">john.doe@example.com</span></p>
+                    <p><strong>Phone Number:</strong> <span id="viewTeacherPhone">+1234567890</span></p>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="closeModal('infoModal')">Close</button>
+                    <button id="editButtonInViewModal">Edit</button>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Edit Modal -->
+        <div id="editModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit Teacher Information</h2>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        <div class="form-group">
+                            <label for="teacherNameInput">Name</label>
+                            <input type="text" id="teacherNameInput">
+                        </div>
+                        <div class="form-group">
+                            <label for="teacherSubjectInput">Subject</label>
+                            <input type="text" id="teacherSubjectInput">
+                        </div>
+                        <div class="form-group">
+                            <label for="teacherClassesInput">Classes</label>
+                            <input type="text" id="teacherClassesInput">
+                        </div>
+                        <div class="form-group">
+                            <label for="teacherEmailInput">Email</label>
+                            <input type="email" id="teacherEmailInput">
+                        </div>
+                        <div class="form-group">
+                            <label for="teacherPhoneInput">Phone Number</label>
+                            <input type="tel" id="teacherPhoneInput">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="closeModal('editModal')">Cancel</button>
+                    <button onclick="saveChanges()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+
+
+         
+        
+    
+    </div>
+    <script src="teacher.js"></script>
+</body>
+</html>
+

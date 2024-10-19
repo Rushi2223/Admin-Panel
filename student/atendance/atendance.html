@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="atendance.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <nav>
+            <a href="/admin/dashboard/dash.html" onclick="showSection('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="/admin/teacher/teacher.html" onclick="showSection('teachers')"><i class="fas fa-chalkboard-teacher"></i> Teachers</a>
+            <div class="dropdown">
+                <a href="#students" onclick="showSection('students')"><i class="fas fa-user-graduate"></i> Students</a>
+                <div class="dropdown-content">
+                    <a href="/admin/student/student.html" onclick="showForm('allStudents')"><i class="fas fa-users"></i>All Students</a>
+                    <a href="#attendance" onclick="showForm('attendance')"><i class="fas fa-calendar-check"></i>Attendance</a>
+                    <a href="#classes" onclick="showForm('classes')"><i class="fas fa-chalkboard"></i>Classes</a>
+                </div>
+            </div>
+            <a href="/admin/billing/bill.html" onclick="showSection('billing')"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+            <a href="/admin/Exam/exam.html" onclick="showSection('exam')"><i class="fas fa-file-alt"></i> Exam</a>
+            <a href="/admin/admissionform/adfo.html" onclick="showSection('admissions')"><i class="fas fa-user-plus"></i> Admission Form</a>
+            <a href="#admission-list" onclick="showSection('admisssion-list')"><i class="fas fa-list"></i> Admission Form List</a>
+            <a href="/admin/event/event.html" onclick="showSection('events')"><i class="fas fa-calendar-alt"></i> Events</a>
+            <a href="/admin/setting/" onclick="showSection('settings')"><i class="fas fa-cogs"></i> Settings</a>
+            <a href="#profile" onclick="showSection('profile')"><i class="fas fa-user"></i> Profile</a>
+        </nav>
+    </div> 
+    <div class="main-content">
+        <div class="top-bar">
+            <input type="search" placeholder="Search..." id="globalSearch">
+            <div class="user-controls">
+                <div style="position: relative;">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge"></span>
+                </div>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+
+        <div id="dashboard" class="section">
+            <h2>Attendance</h2>
+            <div class="dashboard-widgets">
+                <div class="widget">
+                    <h3>Total Users</h3>
+                    <p id="total-users">1,500</p>
+                    <div class="icon-box">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>New Orders</h3>
+                    <p id="new-orders">1000</p>
+                    <div class="icon-box">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>Revenue</h3>
+                    <p id="revenue">$12,345</p>
+                    <div class="icon-box">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>Feedback</h3>
+                    <p id="feedback">1200</p>
+                    <div class="icon-box">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--................................................................-->
+        <h2>Attendance List</h2>
+        <div class="filter-container">
+            <select id="classSelect" onchange="filterAttendance()">
+                <option value="">Select Class</option>
+                <option value="10th Grade">10th Grade</option>
+                <option value="9th Grade">9th Grade</option>
+                <!-- Additional classes -->
+            </select>
+            <select id="monthSelect" onchange="filterAttendance()">
+                <option value="">Select Month</option>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <!-- Additional months -->
+            </select>
+        </div>
+        <div class="table-container">
+            <table id="attendanceTable">
+                <thead>
+                    <tr>
+                        <th class="sortable" onclick="sortTable(0)">Name</th>
+                        <th class="sortable" onclick="sortTable(1)">Student ID</th>
+                        <th>Class</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <!-- Additional days as needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-class="10th Grade" data-month="January">
+                        <td>Jane Doe</td>
+                        <td>123456</td>
+                        <td>10th Grade</td>
+                        <td data-status="present">P</td>
+                        <td data-status="absent">A</td>
+                        <td data-status="present">P</td>
+                        <td data-status="present">P</td>
+                        <td data-status="absent">A</td>
+                    </tr>
+                    <tr data-class="9th Grade" data-month="January">
+                        <td>John Smith</td>
+                        <td>123457</td>
+                        <td>9th Grade</td>
+                        <td data-status="absent">A</td>
+                        <td data-status="present">P</td>
+                        <td data-status="present">P</td>
+                        <td data-status="absent">A</td>
+                        <td data-status="present">P</td>
+                    </tr>
+                    <!-- Additional rows as needed -->
+                </tbody>
+            </table>
+        </div>
+        
+        
+    
+    </div>
+    <script src="atendance.js"></script>
+</body>
+</html>
+

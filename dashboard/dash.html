@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel-Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="dash.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <nav>
+            <a href="#dashboard" onclick="showSection('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="../teacher/teacher.html" onclick="showSection('teachers')"><i class="fas fa-chalkboard-teacher"></i> Teachers</a>
+            <div class="dropdown">
+                <a href="#students" onclick="showSection('students')"><i class="fas fa-user-graduate"></i> Students</a>
+                <div class="dropdown-content">
+                    <a href="../student/student.html" onclick="showForm('allStudents')"><i class="fas fa-users"></i>All Students</a>
+                    <a href="../student/atendance/atendance.html" onclick="showForm('attendance')"><i class="fas fa-calendar-check"></i>Attendance</a>
+                    <a href="#classes" onclick="showForm('classes')"><i class="fas fa-chalkboard"></i>Classes</a>
+                </div>
+            </div>
+            <a href="../billing/bill.html" onclick="showSection('billing')"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+            <a href="../Exam/exam.html" onclick="showSection('exam')"><i class="fas fa-file-alt"></i> Exam</a>
+            <a href="../admissionform/adfo.html" onclick="showSection('admissions')"><i class="fas fa-user-plus"></i> Admission Form</a>
+            <a href="#admission-list" onclick="showSection('admisssion-list')"><i class="fas fa-list"></i> Admission Form List</a>
+            <a href="../event/event.html" onclick="showSection('events')"><i class="fas fa-calendar-alt"></i> Events</a>
+            <a href="../setting/setting.html" onclick="showSection('settings')"><i class="fas fa-cogs"></i> Settings</a>
+            <a href="#profile" onclick="showSection('profile')"><i class="fas fa-user"></i> Profile</a>
+        </nav>
+    </div> 
+    
+    <div class="main-content">
+        <div class="top-bar">
+            <input type="search" placeholder="Search..." id="globalSearch">
+            <div class="user-controls">
+                <div style="position: relative;">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge"></span>
+                </div>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+
+        <div id="dashboard" class="section">
+            <h2>Dashboard</h2>
+            <div class="dashboard-widgets">
+                <div class="widget">
+                    <h3>Total Users</h3>
+                    <p id="total-users">1,500</p>
+                    <div class="icon-box">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>Students</h3>
+                    <p id="Student">1000</p>
+                    <div class="icon-box">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>Teachers</h3>
+                    <p id="Teachers">12</p>
+                    <div class="icon-box">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>Events</h3>
+                    <p id="Events">4</p>
+                    <div class="icon-box">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--<div class="main-content">-->
+            <div class="recent-activities section">
+                <h3>Recent Activities</h3>
+                <div class="activity-item" onclick="showOrderDetails('New Order Received', {orderNumber: '12345', customerName: 'Jane Smith', orderTotal: '$150.00', orderDate: '2024-07-30', items: [{name: 'Item 1', quantity: 2, price: '$50.00'}, {name: 'Item 2', quantity: 1, price: '$50.00'}]})">
+                    <div class="activity-details">
+                        <i class="activity-icon fas fa-shopping-cart"></i>
+                        <span class="activity-text">New Admission received</span>
+                    </div>
+                    <span class="activity-time">10 minutes ago</span>
+                </div>
+                <div class="activity-item" onclick="showPaymentDetails('Payment Received', {paymentAmount: '$150.00', invoiceNumber: 'INV12345', paymentDate: '2024-07-30', payer: 'Jane Smith'})">
+                    <div class="activity-details">
+                        <i class="activity-icon fas fa-dollar-sign"></i>
+                        <span class="activity-text">Payment received from Jane Smith</span>
+                    </div>
+                    <span class="activity-time">30 minutes ago</span>
+                </div>
+                <div class="activity-item" onclick="showLoginDetails('User Login', {username: 'John Doe', loginTime: '2024-07-30 09:00 AM', ipAddress: '192.168.1.1'})">
+                    <div class="activity-details">
+                        <i class="activity-icon fas fa-sign-in-alt"></i>
+                        <span class="activity-text">John Doe logged in</span>
+                    </div>
+                    <span class="activity-time">1 hour ago</span>
+                </div>
+            </div>
+       <!-- </div>-->
+    
+        <!-- Modal for displaying activity details -->
+        <div id="activity-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="modal-title">Activity Details</h4>
+                    <span class="modal-close" onclick="closeModal()">&times;</span>
+                </div>
+                <div class="activity-info">
+                    <h5 id="activity-type">Activity Information</h5>
+                    <div id="activity-content">
+                        <!-- Dynamic content will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>Task Management</h3>
+            <div class="task-form">
+                <input type="text" id="taskName" placeholder="Task Name">
+                <input type="text" id="taskAssignee" placeholder="Assignee">
+                <button onclick="addTask()">Add Task</button>
+            </div>
+            <div id="taskList">
+                <!-- Task items will be dynamically added here -->
+            </div>
+        </div>
+
+        
+        
+        <!-- Main content goes here -->
+    </div>
+    <script src="dash.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel-Bill</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="bill.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
+    
+    
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <nav>
+            <a href="../dashboard/dash.html" onclick="showSection('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="../teacher/teacher.html" onclick="showSection('teachers')"><i class="fas fa-chalkboard-teacher"></i> Teachers</a>
+            <div class="dropdown">
+                <a href="#students" onclick="showSection('students')"><i class="fas fa-user-graduate"></i> Students</a>
+                <div class="dropdown-content">
+                    <a href="../student/student.html" onclick="showForm('allStudents')"><i class="fas fa-users"></i>All Students</a>
+                    <a href="../student/atendance/atendance.html" onclick="showForm('attendance')"><i class="fas fa-calendar-check"></i>Attendance</a>
+                    <a href="#classes" onclick="showForm('classes')"><i class="fas fa-chalkboard"></i>Classes</a>
+                </div>
+            </div>
+            <a href="../billing/bill.html" onclick="showSection('billing')"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+            <a href="../Exam/exam.html" onclick="showSection('exam')"><i class="fas fa-file-alt"></i> Exam</a>
+            <a href="../admissionform/adfo.html" onclick="showSection('admissions')"><i class="fas fa-user-plus"></i> Admission Form</a>
+            <a href="#admission-list" onclick="showSection('admisssion-list')"><i class="fas fa-list"></i> Admission Form List</a>
+            <a href="../event/event.html" onclick="showSection('events')"><i class="fas fa-calendar-alt"></i> Events</a>
+            <a href="#settings" onclick="showSection('settings')"><i class="fas fa-cogs"></i> Settings</a>
+            <a href="#profile" onclick="showSection('profile')"><i class="fas fa-user"></i> Profile</a>
+        </nav>
+    </div> 
+    <div class="main-content">
+        <div class="top-bar">
+            <input type="search" placeholder="Search..." id="globalSearch">
+            <div class="user-controls">
+                <div style="position: relative;">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge"></span>
+                </div>
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+
+        <div id="dashboard" class="section">
+            <h2></h2>
+            <div class="dashboard-widgets">
+                <div class="widget">
+                    <h3>Total Users</h3>
+                    <p id="total-users">1,500</p>
+                    <div class="icon-box">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>Pending Fees</h3>
+                    <p id="new-orders">1000</p>
+                    <div class="icon-box">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>Accetted Fees</h3>
+                    <p id="revenue">$12,345</p>
+                    <div class="icon-box">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                <div class="widget">
+                    <h3>Total Fees</h3>
+                    <p id="feedback">1200</p>
+                    <div class="icon-box">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--------------------------------bill list-------------------------------------------------->
+
+        <div class="container">
+            <h1 class="text-center">Student Bill List</h1>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>ID</th>
+                            <th>Class</th>
+                            <th>Term 1</th>
+                            <th>Term 2</th>
+                            <th>Total Fees</th>
+                            <th>Phone Number</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTableBody">
+                        <tr data-toggle="modal" data-target="#studentModal" data-name="John Doe" data-id="12345" data-class="10A" data-term1="$500" data-term2="$550" data-total="$1050" data-phone="(123) 456-7890">
+                            <td>John Doe</td>
+                            <td>12345</td>
+                            <td>10A</td>
+                            <td>$500</td>
+                            <td>$550</td>
+                            <td>$1050</td>
+                            <td>(123) 456-7890</td>
+                        </tr>
+                        <tr data-toggle="modal" data-target="#studentModal" data-name="Jane Smith" data-id="67890" data-class="9B" data-term1="$480" data-term2="$520" data-total="$1000" data-phone="(098) 765-4321">
+                            <td>Jane Smith</td>
+                            <td>67890</td>
+                            <td>9B</td>
+                            <td>$480</td>
+                            <td>$520</td>
+                            <td>$1000</td>
+                            <td>(098) 765-4321</td>
+                        </tr>
+                        <!-- Add more student rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal fade" id="studentModal" tabindex="-1" role="dialog" aria-labelledby="studentModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="studentModalLabel">Student Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Name:</strong> <span id="modalName"></span></p>
+                        <p><strong>ID:</strong> <span id="modalID"></span></p>
+                        <p><strong>Class:</strong> <span id="modalClass"></span></p>
+                        <p><strong>Term 1:</strong> <span id="modalTerm1"></span></p>
+                        <p><strong>Term 2:</strong> <span id="modalTerm2"></span></p>
+                        <p><strong>Total Fees:</strong> <span id="modalTotal"></span></p>
+                        <p><strong>Phone Number:</strong> <span id="modalPhone"></span></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="bg-white">
+        
+                <!-- Search and Filter -->
+                <div class="flex justify-between items-center mb-6">
+                    <input type="text" placeholder="Search bills..." id="searchInput">
+                    <select id="statusFilter">
+                        <option value="">Filter by Status</option>
+                        <option value="paid">Paid</option>
+                        <option value="unpaid">Unpaid</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+        
+                <!-- Bill Table -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bill ID</th>
+                            <th>Title</th>
+                            <th>Amount</th>
+                            <th>Due Date</th>
+                            <th>Payment Method</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="billTable">
+                        <tr>
+                            <td>123456</td>
+                            <td>Electricity Bill</td>
+                            <td>$150.75</td>
+                            <td>2024-08-15</td>
+                            <td>Credit Card</td>
+                            <td class="status-unpaid">Unpaid</td>
+                            <td>
+                                <button class="view" onclick="viewBill(this)">View</button>
+                                <button class="edit" onclick="editBill(this)">Edit</button>
+                                <button class="delete" onclick="deleteBill(this)">Delete</button>
+                            </td>
+                        </tr>
+                        <!-- Repeat this row for each bill -->
+                    </tbody>
+                </table>
+        
+                <!-- Pagination -->
+                <div class="pagination">
+                    <div class="pagination-info">Showing 1 to 10 of 50 entries</div>
+                    <div class="pagination-buttons">
+                        <button>Previous</button>
+                        <button>1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <button>Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal Structure -->
+        <div id="modal">
+            <div id="modal-content">
+                <span id="modal-close">&times;</span>
+                <div id="modal-content-inner"></div>
+            </div>
+        </div>
+        
+    
+        
+    
+        <!-- Main content goes here -->
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="bill.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
